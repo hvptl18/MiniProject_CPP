@@ -1,0 +1,101 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+class Game {
+private:
+    int userChoice;
+    int computerChoice;
+    int userScore;
+    int computerScore;
+
+public:
+    // Constructor
+    Game() {
+        userScore = 0;
+        computerScore = 0;
+    }
+
+    // Take user input
+    void getUserChoice() {
+        cout << "\n1. Rock\n2. Paper\n3. Scissors\n";
+        cout << "Enter your choice: ";
+        cin >> userChoice;
+
+        // simple validation
+        while (userChoice < 1 || userChoice > 3) {
+            cout << "Invalid choice! Enter again: ";
+            cin >> userChoice;
+        }
+    }
+
+    // Generate computer choice
+    void generateComputerChoice() {
+        computerChoice = rand() % 3 + 1;
+    }
+
+    // Display choices
+    void displayChoice(int choice) {
+        if (choice == 1) cout << "Rock";
+        else if (choice == 2) cout << "Paper";
+        else cout << "Scissors";
+    }
+
+    void showChoices() {
+        cout << "You chose: ";
+        displayChoice(userChoice);
+        cout << "\nComputer chose: ";
+        displayChoice(computerChoice);
+        cout << endl;
+    }
+
+    // Decide result
+    void decideWinner() {
+        if (userChoice == computerChoice) {
+            cout << "Result: Draw\n";
+        }
+        else if ((userChoice == 1 && computerChoice == 3) ||
+                 (userChoice == 2 && computerChoice == 1) ||
+                 (userChoice == 3 && computerChoice == 2)) {
+            cout << "Result: You Win!\n";
+            userScore++;
+        }
+        else {
+            cout << "Result: Computer Wins!\n";
+            computerScore++;
+        }
+    }
+
+    // Display score
+    void showScore() {
+        cout << "\nScore:\n";
+        cout << "You: " << userScore << endl;
+        cout << "Computer: " << computerScore << endl;
+    }
+};
+
+int main() {
+    Game g;
+    char choice;
+
+    srand(time(0));
+
+    cout << "----- Rock Paper Scissors Game -----\n";
+
+    do {
+        g.getUserChoice();
+        g.generateComputerChoice();
+        g.showChoices();
+        g.decideWinner();
+        g.showScore();
+
+        cout << "\nPlay again? (y/n): ";
+        cin >> choice;
+
+    } while (choice == 'y' || choice == 'Y');
+
+    cout << "\nThank you for playing!\n";
+
+    return 0;
+}
